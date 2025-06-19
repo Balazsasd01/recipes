@@ -3,211 +3,136 @@ $minFxVersion: 13165
 $onesync: on
 
 name: fl_esx_recipe
-version: 1.1.1
+version: 1.1.2
 author: Csoki&Adam
-description: FiveM Land - ESX Legacy Recipe (Javított)
+description: FiveM Land – ESX Legacy Recipe (Javított, ESX‑Org modulokkal)
 
 tasks:
-  # ─────────────── CFX default resources ───────────────
+  # ─── CFX Alapresources ───────────────────────────────
   - action: download_github
     src: https://github.com/citizenfx/cfx-server-data
     ref: master
     subpath: resources
     dest: ./resources/[cfx-default]
 
-  # ─────────────── Alapvető kiegészítések ───────────────
   - action: download_github
     src: https://github.com/Bob74/bob74_ipl
     ref: master
     dest: ./resources/bob74_ipl
 
+  # ─── ESX core modulok ────────────────────────────────
   - action: download_github
-    src: https://github.com/fivemland/recipes
-    ref: main
-    dest: ./tmp/recipe
-
-  - action: move_path
-    src: ./tmp/recipe/server.cfg
-    dest: ./server.cfg
-
-  - action: move_path
-    src: ./tmp/recipe/fivemland.png
-    dest: ./fivemland.png
-
-  - action: connect_database
-
-  # ─────────────── ESX core ───────────────
-  - action: download_github
-    src: https://github.com/esx-framework/esx-core
-    ref: main
+    src: https://github.com/esx-legacy/esx_core
+    ref: master
     dest: ./tmp/core
 
   - action: move_path
-    src: ./tmp/core/[core]
-    dest: ./resources/[core]
+    src: ./tmp/core/[esx-core]
+    dest: ./resources/[esx-core]
 
   - action: remove_path
-    path: ./resources/[core]/esx_multicharacter
+    path: ./resources/[esx-core]/esx_multicharacter
 
   - action: replace_string
-    file: ./resources/[core]/es_extended/shared/config/main.lua
+    file: ./resources/[esx-core]/es_extended/shared/config/main.lua
     search: 'Config.CustomInventory = false'
     replace: 'Config.CustomInventory = "ox"'
 
   - action: query_database
     file: ./tmp/core/[SQL]/legacy.sql
 
-  # ─────────────── ESX Addonok ───────────────
+  # ─── ESX addonok (ESX‑Org helyett) ──────────────────
   - action: download_github
-    src: https://github.com/esx-framework/esx_addonaccount
-    ref: main
+    src: https://github.com/ESX-Org/esx_addonaccount
+    ref: master
     dest: ./tmp/addons/esx_addonaccount
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_addoninventory
-    ref: main
+    src: https://github.com/ESX-Org/esx_addoninventory
+    ref: master
     dest: ./tmp/addons/esx_addoninventory
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_datastore
-    ref: main
+    src: https://github.com/ESX-Org/esx_datastore
+    ref: master
     dest: ./tmp/addons/esx_datastore
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_status
-    ref: main
+    src: https://github.com/ESX-Org/esx_status
+    ref: master
     dest: ./tmp/addons/esx_status
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_basicneeds
-    ref: main
+    src: https://github.com/ESX-Org/esx_basicneeds
+    ref: master
     dest: ./tmp/addons/esx_basicneeds
 
-  - action: download_file
-    path: ./tmp/files/esx_hud.zip
-    url: https://github.com/esx-framework/esx_hud/releases/latest/download/esx_hud.zip
-
-  - action: unzip
-    src: ./tmp/files/esx_hud.zip
-    dest: ./tmp/addons
-
   - action: download_github
-    src: https://github.com/esx-framework/esx_optionalneeds
-    ref: main
+    src: https://github.com/ESX-Org/esx_optionalneeds
+    ref: master
     dest: ./tmp/addons/esx_optionalneeds
 
-  # ─────────────── Munkák, szolgáltatások ───────────────
   - action: download_github
-    src: https://github.com/esx-framework/esx_policejob
-    ref: main
+    src: https://github.com/ESX-Org/esx_policejob
+    ref: master
     dest: ./tmp/addons/esx_policejob
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_ambulancejob
-    ref: main
+    src: https://github.com/ESX-Org/esx_ambulancejob
+    ref: master
     dest: ./tmp/addons/esx_ambulancejob
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_mechanicjob
-    ref: main
+    src: https://github.com/ESX-Org/esx_mechanicjob
+    ref: master
     dest: ./tmp/addons/esx_mechanicjob
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_taxijob
-    ref: main
-    dest: ./tmp/addons/esx_taxijob
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_jobs
-    ref: main
+    src: https://github.com/ESX-Org/esx_jobs
+    ref: master
     dest: ./tmp/addons/esx_jobs
 
-  # ─────────────── Egyéb addonok ───────────────
   - action: download_github
-    src: https://github.com/esx-framework/esx_society
-    ref: main
+    src: https://github.com/ESX-Org/esx_society
+    ref: master
     dest: ./tmp/addons/esx_society
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_property
-    ref: main
+    src: https://github.com/ESX-Org/esx_property
+    ref: master
     dest: ./tmp/addons/esx_property
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_garage
-    ref: main
+    src: https://github.com/ESX-Org/esx_garage
+    ref: master
     dest: ./tmp/addons/esx_garage
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_vehicleshop
-    ref: main
+    src: https://github.com/ESX-Org/esx_vehicleshop
+    ref: master
     dest: ./tmp/addons/esx_vehicleshop
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_billing
-    ref: main
+    src: https://github.com/ESX-Org/esx_billing
+    ref: master
     dest: ./tmp/addons/esx_billing
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_drugs
-    ref: main
+    src: https://github.com/ESX-Org/esx_drugs
+    ref: master
     dest: ./tmp/addons/esx_drugs
 
   - action: download_github
-    src: https://github.com/esx-framework/esx_license
-    ref: main
+    src: https://github.com/ESX-Org/esx_license
+    ref: master
     dest: ./tmp/addons/esx_license
 
-  - action: download_github
-    src: https://github.com/esx-framework/esx_joblisting
-    ref: main
-    dest: ./tmp/addons/esx_joblisting
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_lscustom
-    ref: main
-    dest: ./tmp/addons/esx_lscustom
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_dmvschool
-    ref: main
-    dest: ./tmp/addons/esx_dmvschool
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_boat
-    ref: main
-    dest: ./tmp/addons/esx_boat
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_barbershop
-    ref: main
-    dest: ./tmp/addons/esx_barbershop
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_rpchat
-    ref: main
-    dest: ./tmp/addons/esx_rpchat
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_service
-    ref: main
-    dest: ./tmp/addons/esx_service
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_animations
-    ref: main
-    dest: ./tmp/addons/esx_animations
-
-  - action: download_github
-    src: https://github.com/esx-framework/esx_sit
-    ref: main
-    dest: ./tmp/addons/esx_sit
-
+  # ─── Addon áthelyezés és DB import ──────────────────
   - action: move_path
     src: ./tmp/addons
     dest: ./resources/[esx_addons]
 
-  # ─────────────── OX rendszer ───────────────
+  # ─── OX rendszer támogatás ───────────────────────────
   - action: download_file
     url: https://github.com/overextended/oxmysql/releases/latest/download/oxmysql.zip
     path: ./tmp/oxmysql.zip
@@ -231,10 +156,10 @@ tasks:
 
   - action: download_github
     src: https://github.com/overextended/ox_fuel
-    ref: main
+    ref: master
     dest: ./resources/[ox]/ox_fuel
 
-  # ─────────────── Illenium Appearance ───────────────
+  # ─── Illenium Appearance ────────────────────────────
   - action: download_file
     url: https://github.com/iLLeniumStudios/illenium-appearance/releases/latest/download/illenium-appearance.zip
     path: ./tmp/illenium-appearance.zip
@@ -251,7 +176,7 @@ tasks:
   - action: query_database
     file: ./resources/illenium-appearance/sql/playerskins.sql
 
-  # ─────────────── NPWD telefon ───────────────
+  # ─── NPWD telefon rendszer ──────────────────────────
   - action: download_file
     url: https://github.com/project-error/npwd/releases/latest/download/npwd.zip
     path: ./tmp/npwd.zip
@@ -266,18 +191,16 @@ tasks:
     file: ./resources/npwd/config.json
     search: '"useResourceIntegration": false'
     replace: '"useResourceIntegration": true'
-
   - action: replace_string
     file: ./resources/npwd/config.json
     search: '"level": "silly"'
     replace: '"level": "error"'
-
   - action: replace_string
     file: ./resources/npwd/config.json
     search: '"defaultLanguage": "en"'
     replace: '"defaultLanguage": "hu"'
 
-  # ─────────────── Egyéb hasznos script-ek ───────────────
+  # ─── Hasznos script‑addonok ────────────────────────
   - action: download_github
     src: https://github.com/AvarianKnight/pma-voice
     ref: main
@@ -313,12 +236,12 @@ tasks:
     ref: main
     dest: ./resources/[fivemland]/fl_scoreboard
 
-  # ─────────────── Cleanup ───────────────
+  # ─── Takarítás felesleges fájloktól ────────────────
   - action: remove_path
     path: ./tmp
   - action: remove_path
-    path: ./resources/[core]/esx_skin
+    path: ./resources/[esx-core]/esx_skin
   - action: remove_path
-    path: ./resources/[core]/skinchanger
+    path: ./resources/[esx-core]/skinchanger
   - action: remove_path
-    path: ./resources/[core]/esx_example
+    path: ./resources/[esx-core]/esx_example
